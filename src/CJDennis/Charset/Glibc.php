@@ -15,7 +15,7 @@ class Glibc implements Iconv {
       fwrite($file_handle, $match[0]);
       fflush($file_handle);
 
-      $glyph = system("iconv -c -f UTF-8 -t {$to_charset}//IGNORE//TRANSLIT {$path}", $return_var);
+      $glyph = system("iconv -c -f UTF-8 -t {$to_charset}//TRANSLIT {$path}", $return_var);
       if ($glyph === false) {
         $glyph = $replacement;
       }

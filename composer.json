@@ -1,0 +1,19 @@
+{
+    "name": "cjdennis/charset",
+    "description": "A library for character set functions",
+    "type": "library",
+    "require-dev": {
+        "codeception/codeception": ">=2.4"
+    },
+    "license": "MIT",
+    "minimum-stability": "stable",
+    "require": {
+        "ext-iconv": "*"
+    },
+    "autoload": {
+        "psr-4": {"CJDennis\\Charset\\": "src/CJDennis/Charset/"}
+    },
+    "autoload-dev": {
+        "psr-4": {"CJDennis\\Charset\\": "tests-common/unit/CJDennis/Charset/"}
+    }
+}

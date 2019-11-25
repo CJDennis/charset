@@ -32,4 +32,21 @@ trait CharsetTestCommon {
         'CP1252')
     );
   }
+
+  public function testShouldConvertUnicodeDaggerToASCIIQuestionMark() {
+    $this->assertSame(
+      CharsetTestCharacters::ASCII_QUESTION_MARK,
+      Charset::convert(
+        CharsetTestCharacters::UTF8_CURRENCY_SIGN)
+    );
+  }
+
+  public function testShouldConvertUnicodeDaggerToCP1252Dagger() {
+    $this->assertSame(
+      CharsetTestCharacters::CP1252_CURRENCY_SIGN,
+      Charset::convert(
+        CharsetTestCharacters::UTF8_CURRENCY_SIGN,
+        'CP1252')
+    );
+  }
 }

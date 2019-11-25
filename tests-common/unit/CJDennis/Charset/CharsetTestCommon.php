@@ -4,7 +4,7 @@ namespace CJDennis\Charset;
 
 trait CharsetTestCommon {
   // tests
-  public function testShouldConvertCurlyUnicodeQuotesToStraightASCIIQuotes() {
+  public function testShouldConvertUnicodeCurlyQuotesToASCIIStraightQuotes() {
     $this->assertSame(
       CharsetTestCharacters::ASCII_QUOTATION_MARK .
       CharsetTestCharacters::ASCII_APOSTROPHE .
@@ -18,7 +18,7 @@ trait CharsetTestCommon {
     );
   }
 
-  public function testShouldConvertCurlyUnicodeQuotesToCurlyCP1252Quotes() {
+  public function testShouldConvertUnicodeCurlyQuotesToCP1252CurlyQuotes() {
     $this->assertSame(
       CharsetTestCharacters::CP1252_LEFT_DOUBLE_QUOTATION_MARK .
       CharsetTestCharacters::CP1252_LEFT_SINGLE_QUOTATION_MARK .

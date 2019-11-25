@@ -3,7 +3,41 @@
 namespace CJDennis\Charset;
 
 trait CharsetTestCommon {
+  protected function common_before() {
+    CharsetSeam::unset_iconv_library();
+    CharsetSeam::unset_iconv_implementation();
+  }
+
+  protected function common_after() {
+  }
+
   // tests
+  public function testShouldSetGnuLibiconvAsTheIconvLibrary() {
+    CharsetSeam::set_iconv_implementation('"libiconv"');
+    $this->assertSame('CJDennis\Charset\GnuLibiconv', CharsetSeam::get_iconv_library());
+  }
+
+  public function testShouldSetBsdAsTheIconvLibrary() {
+    CharsetSeam::set_iconv_implementation('BSD iconv');
+    $this->assertSame('CJDennis\Charset\Bsd', CharsetSeam::get_iconv_library());
+  }
+
+  public function testShouldSetGlibcAsTheIconvLibrary() {
+    CharsetSeam::set_iconv_implementation('glibc');
+    $this->assertSame('CJDennis\Charset\Glibc', CharsetSeam::get_iconv_library());
+  }
+
+  public function testShouldSetIbmAsTheIconvLibrary() {
+    CharsetSeam::set_iconv_implementation('IBM iconv');
+    $this->assertSame('CJDennis\Charset\Ibm', CharsetSeam::get_iconv_library());
+  }
+
+  public function testShouldThrowAnExceptionForAnUnknownIconvLibrary() {
+    $this->compatibilityExpectException(new CharsetException('Unknown iconv library'), function () {
+      CharsetSeam::set_iconv_implementation('unknown');
+    });
+  }
+
   public function testShouldConvertUnicodeCurlyQuotesToASCIIStraightQuotes() {
     $this->assertSame(
       CharsetTestCharacters::ASCII_QUOTATION_MARK .

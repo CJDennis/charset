@@ -3,7 +3,8 @@
     "description": "A library for character set functions",
     "type": "library",
     "require-dev": {
-        "codeception/codeception": ">=2.4"
+        "codeception/codeception": ">=2.4",
+        "cjdennis/unit-test-compatibility": "^0.0.1"
     },
     "license": "MIT",
     "minimum-stability": "stable",

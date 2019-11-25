@@ -49,4 +49,12 @@ trait CharsetTestCommon {
         'CP1252')
     );
   }
+
+  public function testShouldConvertUnicodeCurrencySignToASCIIAsterisk() {
+    $this->assertSame(
+      CharsetTestCharacters::ASCII_ASTERISK,
+      Charset::convert(
+        CharsetTestCharacters::UTF8_CURRENCY_SIGN, 'ASCII', CharsetTestCharacters::ASCII_ASTERISK)
+    );
+  }
 }

@@ -33,7 +33,7 @@ trait CharsetTestCommon {
     );
   }
 
-  public function testShouldConvertUnicodeDaggerToASCIIQuestionMark() {
+  public function testShouldConvertUnicodeCurrencySignToASCIIQuestionMark() {
     $this->assertSame(
       CharsetTestCharacters::ASCII_QUESTION_MARK,
       Charset::convert(
@@ -41,7 +41,7 @@ trait CharsetTestCommon {
     );
   }
 
-  public function testShouldConvertUnicodeDaggerToCP1252Dagger() {
+  public function testShouldConvertUnicodeCurrencySignToCP1252CurrencySign() {
     $this->assertSame(
       CharsetTestCharacters::CP1252_CURRENCY_SIGN,
       Charset::convert(

@@ -4,6 +4,7 @@ namespace CJDennis\Charset;
 class CharsetTestCharacters {
   const ASCII_QUOTATION_MARK = '"';
   const ASCII_APOSTROPHE = "'";
+  const ASCII_ASTERISK = '*';
   const ASCII_QUESTION_MARK = '?';
 
   const CP1252_LEFT_SINGLE_QUOTATION_MARK = "\x91";

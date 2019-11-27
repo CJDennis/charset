@@ -38,6 +38,46 @@ trait CharsetTestCommon {
     });
   }
 
+  public function testShouldConvertConvertibleUnicodeQuestionMarksToASCII() {
+    $pieces = [
+      CharsetTestCharacters::UTF8_QUESTION_MARK => '?',
+      CharsetTestCharacters::UTF8_INVERTED_QUESTION_MARK => '?',
+      CharsetTestCharacters::UTF8_DOUBLE_QUESTION_MARK => '??',
+      CharsetTestCharacters::UTF8_QUESTION_EXCLAMATION_MARK => '?!',
+      CharsetTestCharacters::UTF8_EXCLAMATION_QUESTION_MARK => '!?',
+      CharsetTestCharacters::UTF8_SMALL_QUESTION_MARK => '?',
+      CharsetTestCharacters::UTF8_FULLWIDTH_QUESTION_MARK => '?',
+      CharsetTestCharacters::UTF8_TAG_QUESTION_MARK => '',
+    ];
+    $this->assertSame( join(' ', array_values($pieces)), Charset::convert(join(' ', array_keys($pieces)), 'ASCII', '*'));
+  }
+
+  public function testShouldConvertNonconvertibleUnicodeQuestionMarksToASCIIAsterisk() {
+    $pieces = [
+      CharsetTestCharacters::UTF8_GREEK_QUESTION_MARK => '*',
+      CharsetTestCharacters::UTF8_ARMENIAN_QUESTION_MARK => '*',
+      CharsetTestCharacters::UTF8_ARABIC_QUESTION_MARK => '*',
+      CharsetTestCharacters::UTF8_ETHIOPIC_QUESTION_MARK => '*',
+      CharsetTestCharacters::UTF8_LIMBU_QUESTION_MARK => '*',
+      CharsetTestCharacters::UTF8_QUESTIONED_EQUAL_TO => '*',
+      CharsetTestCharacters::UTF8_APL_FUNCTIONAL_SYMBOL_QUAD_QUESTION => '*',
+      CharsetTestCharacters::UTF8_BLACK_QUESTION_MARK_ORNAMENT => '*',
+      CharsetTestCharacters::UTF8_WHITE_QUESTION_MARK_ORNAMENT => '*',
+      CharsetTestCharacters::UTF8_LESS_THAN_WITH_QUESTION_MARK_ABOVE => '*',
+      CharsetTestCharacters::UTF8_GREATER_THAN_WITH_QUESTION_MARK_ABOVE => '*',
+      CharsetTestCharacters::UTF8_COPTIC_OLD_NUBIAN_DIRECT_QUESTION_MARK => '*',
+      CharsetTestCharacters::UTF8_COPTIC_OLD_NUBIAN_INDIRECT_QUESTION_MARK => '*',
+      CharsetTestCharacters::UTF8_REVERSED_QUESTION_MARK => '*',
+      CharsetTestCharacters::UTF8_CIRCLED_IDEOGRAPH_QUESTION => '*',
+      CharsetTestCharacters::UTF8_VAI_QUESTION_MARK => '*',
+      CharsetTestCharacters::UTF8_BAMUM_QUESTION_MARK => '*',
+      CharsetTestCharacters::UTF8_PRESENTATION_FORM_FOR_VERTICAL_QUESTION_MARK => '*',
+      CharsetTestCharacters::UTF8_CHAKMA_QUESTION_MARK => '*',
+      CharsetTestCharacters::UTF8_ADLAM_INITIAL_QUESTION_MARK => '*',
+    ];
+    $this->assertSame( join(' ', array_values($pieces)), Charset::convert(join(' ', array_keys($pieces)), 'ASCII', '*'));
+  }
+
   public function testShouldConvertUnicodeCurlyQuotesToASCIIStraightQuotes() {
     $this->assertSame(
       CharsetTestCharacters::ASCII_QUOTATION_MARK .

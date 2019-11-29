@@ -2,6 +2,11 @@
 namespace CJDennis\Charset;
 
 class Glibc implements Iconv {
+  const UTF8_QUESTION_MARK = '?';
+  const UTF8_INVERTED_QUESTION_MARK = "\xC2\xBF";
+  const UTF8_SMALL_QUESTION_MARK = "\xEF\xB9\x96";
+  const UTF8_FULLWIDTH_QUESTION_MARK = "\xEF\xBC\x9F";
+
   public static function convert($string, $to_charset, $replacement) {
     $file_handle = tmpfile();
     $path = stream_get_meta_data($file_handle)['uri'];
@@ -15,8 +20,16 @@ class Glibc implements Iconv {
       fwrite($file_handle, $match[0]);
       fflush($file_handle);
 
-      $glyph = system("iconv -c -f UTF-8 -t {$to_charset}//TRANSLIT {$path}", $return_var);
+      $glyph = iconv('UTF-8', "{$to_charset}//TRANSLIT", $match[0]);
       if ($glyph === false) {
+        $glyph = $replacement;
+      }
+      elseif ($glyph === '?' && !preg_match("/[" . join('', [
+            static::UTF8_QUESTION_MARK,
+            static::UTF8_INVERTED_QUESTION_MARK,
+            static::UTF8_SMALL_QUESTION_MARK,
+            static::UTF8_FULLWIDTH_QUESTION_MARK,
+          ]) . "]/u", $match[0])) {
         $glyph = $replacement;
       }
 

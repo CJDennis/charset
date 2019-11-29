@@ -52,9 +52,12 @@ trait CharsetTestCommon {
     $this->assertSame( join(' ', array_values($pieces)), Charset::convert(join(' ', array_keys($pieces)), 'ASCII', '*'));
   }
 
+  public function testShouldConvertUnicodeGreekQuestionMarkToASCIISemicolon() {
+    $this->assertSame(';', Charset::convert(CharsetTestCharacters::UTF8_GREEK_QUESTION_MARK, 'ASCII', '*'));
+  }
+
   public function testShouldConvertNonconvertibleUnicodeQuestionMarksToASCIIAsterisk() {
     $pieces = [
-      CharsetTestCharacters::UTF8_GREEK_QUESTION_MARK => '*',
       CharsetTestCharacters::UTF8_ARMENIAN_QUESTION_MARK => '*',
       CharsetTestCharacters::UTF8_ARABIC_QUESTION_MARK => '*',
       CharsetTestCharacters::UTF8_ETHIOPIC_QUESTION_MARK => '*',

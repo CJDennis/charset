@@ -49,7 +49,7 @@ trait CharsetTestCommon {
       CharsetTestCharacters::UTF8_FULLWIDTH_QUESTION_MARK => '?',
       CharsetTestCharacters::UTF8_TAG_QUESTION_MARK => '',
     ];
-    $this->assertSame( join(' ', array_values($pieces)), Charset::convert(join(' ', array_keys($pieces)), 'ASCII', '*'));
+    $this->assertSame(join(' ', array_values($pieces)), Charset::convert(join(' ', array_keys($pieces)), 'ASCII', '*'));
   }
 
   public function testShouldConvertUnicodeGreekQuestionMarkToASCIISemicolon() {

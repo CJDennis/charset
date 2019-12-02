@@ -14,6 +14,9 @@ class GnuLibiconv implements Iconv {
           $glyph = $replacement;
         }
       }
+      elseif (preg_match('/\w/', $glyph)) {        // If the text contains any letters...
+        $glyph = preg_replace('/\W+/', '', $glyph); // ...then remove all non-letters
+      }
       return $glyph;
     }, $string);
   }

@@ -137,4 +137,8 @@ trait CharsetTestCommon {
         CharsetTestCharacters::UTF8_CURRENCY_SIGN, 'ASCII', CharsetTestCharacters::ASCII_ASTERISK)
     );
   }
+
+  public function testShouldConvertUnicodeFrenchAccentedTextToASCIIEnglishUnaccentedText() {
+    $this->assertSame('creme brulee facade', Charset::convert('crème brûlée façade'));
+  }
 }

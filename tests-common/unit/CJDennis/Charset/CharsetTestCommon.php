@@ -38,6 +38,9 @@ trait CharsetTestCommon {
     });
   }
 
+  /**
+   * @group tag-codepoint
+   */
   public function testShouldConvertConvertibleUnicodeQuestionMarksToASCII() {
     $pieces = [
       CharsetTestCharacters::UTF8_QUESTION_MARK => '?',

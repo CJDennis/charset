@@ -130,4 +130,8 @@ trait CharsetTestCommon {
   public function testShouldConvertUnicodeFrenchAccentedTextToASCIIEnglishUnaccentedText() {
     $this->assertSame('creme brulee facade', Charset::convert('crème brûlée façade'));
   }
+
+  public function testShouldOverrideIncorrectCodepointsToASCII() {
+    $this->assertSame('?25, EUR25, L25, Y25', Charset::convert('¤25, €25, £25, ¥25'));
+  }
 }

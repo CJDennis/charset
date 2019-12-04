@@ -12,18 +12,7 @@ class Glibc implements Iconv {
   const UTF8_FULLWIDTH_QUESTION_MARK = "\xEF\xBC\x9F";
 
   public static function convert($string, $to_charset, $replacement) {
-    $file_handle = tmpfile();
-    $path = stream_get_meta_data($file_handle)['uri'];
-
-    $to_charset = static::escape_bash($to_charset);
-    $path = static::escape_bash($path);
-
-    return preg_replace_callback('/\X/u', function ($match) use ($file_handle, $path, $to_charset, $replacement) {
-      ftruncate($file_handle, 0);
-      fseek($file_handle, 0);
-      fwrite($file_handle, $match[0]);
-      fflush($file_handle);
-
+    return preg_replace_callback('/\X/u', function ($match) use ($to_charset, $replacement) {
       $glyph = iconv(static::UTF_8, "{$to_charset}//TRANSLIT", $match[0]);
       if (iconv($to_charset, static::UTF_8, $glyph) !== $match[0] && array_key_exists($match[0], static::$overrides)) {
         $glyph = static::$overrides[$match[0]];

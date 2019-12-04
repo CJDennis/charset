@@ -2,6 +2,8 @@
 namespace CJDennis\Charset;
 
 class Glibc implements Iconv {
+  use IconvOverrides;
+
   const UTF8_QUESTION_MARK = '?';
   const UTF8_INVERTED_QUESTION_MARK = "\xC2\xBF";
   const UTF8_SMALL_QUESTION_MARK = "\xEF\xB9\x96";
@@ -21,7 +23,10 @@ class Glibc implements Iconv {
       fflush($file_handle);
 
       $glyph = iconv('UTF-8', "{$to_charset}//TRANSLIT", $match[0]);
-      if ($glyph === false) {
+      if (iconv($to_charset, 'UTF-8', $glyph) !== $match[0] && array_key_exists($match[0], static::$overrides)) {
+        $glyph = static::$overrides[$match[0]];
+      }
+      elseif ($glyph === false) {
         $glyph = $replacement;
       }
       elseif ($glyph === '?' && !preg_match("/[" . join('', [

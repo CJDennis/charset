@@ -32,9 +32,4 @@ class Glibc implements Iconv {
       return $glyph;
     }, $string);
   }
-
-  protected static function escape_bash($string) {
-    $string = str_replace("'", "'\\''", $string);
-    return $string;
-  }
 }

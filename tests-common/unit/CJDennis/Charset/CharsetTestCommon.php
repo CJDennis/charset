@@ -134,4 +134,12 @@ trait CharsetTestCommon {
   public function testShouldOverrideIncorrectCodepointsToASCII() {
     $this->assertSame('?25, EUR25, L25, Y25', Charset::convert('¤25, €25, £25, ¥25'));
   }
+
+  public function testShouldDecomposeComposedGlyphsToASCII() {
+    $this->assertSame("'n cafe c/o", Charset::convert('ŉ café ℅'));
+  }
+
+  public function testShouldDecomposeComposedGlyphsToCP1252() {
+    $this->assertSame("'n caf\xE9 c/o", Charset::convert('ŉ café ℅', 'CP1252'));
+  }
 }

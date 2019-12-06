@@ -15,17 +15,18 @@ class GnuLibiconv implements Iconv {
       if (iconv($to_charset, static::UTF_8, $glyph) !== $match[0] && array_key_exists($match[0], static::$overrides)) {
         $glyph = static::$overrides[$match[0]];
       }
-      elseif ($glyph === '') {
+      else {
         $form_d = Normalizer::normalize($match[0], Normalizer::FORM_D);
-        $glyph = iconv(static::UTF_8, $transliteration_to_charset, $form_d);
         if ($glyph === '') {
-          $glyph = $replacement;
+          $glyph = iconv(static::UTF_8, $transliteration_to_charset, $form_d);
+          if ($glyph === '') {
+            $glyph = $replacement;
+          }
         }
-      }
-      elseif (preg_match('/\pL/u', $match[0]) && iconv($to_charset, static::UTF_8, $glyph) !== $match[0]) {  // If the glyph is a letter...
-        $form_d = Normalizer::normalize($match[0], Normalizer::FORM_D);
-        $glyph = preg_replace('/[\pP\pS]+/u', '', $form_d); // ...then remove all punctuation and symbols
-        $glyph = iconv('UTF-8', $transliteration_to_charset, $glyph);
+        elseif (preg_match('/\pL/u', $match[0]) && iconv($to_charset, static::UTF_8, $glyph) !== $match[0]) {  // If the glyph is a letter...
+          $glyph = preg_replace('/[\pP\pS]+/u', '', $form_d); // ...then remove all punctuation and symbols
+          $glyph = iconv('UTF-8', $transliteration_to_charset, $glyph);
+        }
       }
       return $glyph;
     }, $string);

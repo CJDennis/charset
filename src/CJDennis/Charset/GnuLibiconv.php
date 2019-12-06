@@ -21,8 +21,10 @@ class GnuLibiconv implements Iconv {
           $glyph = $replacement;
         }
       }
-      elseif (preg_match('/\w/', $glyph)) {        // If the text contains any letters...
-        $glyph = preg_replace('/\W+/', '', $glyph); // ...then remove all non-letters
+      elseif (preg_match('/\pL/u', $match[0]) && iconv($to_charset, static::UTF_8, $glyph) !== $match[0]) {  // If the glyph is a letter...
+        $form_d = Normalizer::normalize($match[0], Normalizer::FORM_D);
+        $glyph = preg_replace('/[\pP\pS]+/u', '', $form_d); // ...then remove all punctuation and symbols
+        $glyph = iconv('UTF-8', "{$to_charset}//IGNORE//TRANSLIT", $glyph);
       }
       return $glyph;
     }, $string);

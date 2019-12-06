@@ -10,13 +10,14 @@ class GnuLibiconv implements Iconv {
 
   public static function convert($string, $to_charset, $replacement) {
     return preg_replace_callback('/\X[\x{E0020}-\x{E007F}]*/u', function ($match) use ($to_charset, $replacement) {
-      $glyph = iconv(static::UTF_8, "{$to_charset}//IGNORE//TRANSLIT", $match[0]);
+      $transliteration_to_charset = "{$to_charset}//IGNORE//TRANSLIT";
+      $glyph = iconv(static::UTF_8, $transliteration_to_charset, $match[0]);
       if (iconv($to_charset, static::UTF_8, $glyph) !== $match[0] && array_key_exists($match[0], static::$overrides)) {
         $glyph = static::$overrides[$match[0]];
       }
       elseif ($glyph === '') {
-        $glyph = Normalizer::normalize($match[0], Normalizer::FORM_D);
-        $glyph = iconv(static::UTF_8, "{$to_charset}//IGNORE//TRANSLIT", $glyph);
+        $form_d = Normalizer::normalize($match[0], Normalizer::FORM_D);
+        $glyph = iconv(static::UTF_8, $transliteration_to_charset, $form_d);
         if ($glyph === '') {
           $glyph = $replacement;
         }
@@ -24,7 +25,7 @@ class GnuLibiconv implements Iconv {
       elseif (preg_match('/\pL/u', $match[0]) && iconv($to_charset, static::UTF_8, $glyph) !== $match[0]) {  // If the glyph is a letter...
         $form_d = Normalizer::normalize($match[0], Normalizer::FORM_D);
         $glyph = preg_replace('/[\pP\pS]+/u', '', $form_d); // ...then remove all punctuation and symbols
-        $glyph = iconv('UTF-8', "{$to_charset}//IGNORE//TRANSLIT", $glyph);
+        $glyph = iconv('UTF-8', $transliteration_to_charset, $glyph);
       }
       return $glyph;
     }, $string);

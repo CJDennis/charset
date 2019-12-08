@@ -142,4 +142,13 @@ trait CharsetTestCommon {
   public function testShouldDecomposeComposedGlyphsToCP1252() {
     $this->assertSame("'n caf\xE9 c/o", Charset::convert('ŉ café ℅', 'CP1252'));
   }
+
+  public function testShouldConvertCP1252TextToASCIIText() {
+    $this->assertSame('L12.95 in the cafe', Charset::convert(
+      CharsetTestCharacters::CP1252_POUND_SIGN . '12.95 in the caf' . CharsetTestCharacters::CP1252_LATIN_CAPITAL_LETTER_E_WITH_ACUTE,
+      'ASCII',
+      '?',
+      'CP1252'
+    ));
+  }
 }

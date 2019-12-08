@@ -16,6 +16,11 @@
         "psr-4": {"CJDennis\\Charset\\": "src/CJDennis/Charset/"}
     },
     "autoload-dev": {
-        "psr-4": {"CJDennis\\Charset\\": "tests-common/unit/CJDennis/Charset/"}
+        "psr-4": {
+            "CJDennis\\Charset\\": "tests-common/unit/CJDennis/Charset/",
+            "Tests\\Codeception\\": "tests-codeception/",
+            "Tests\\Common\\": "tests-common/",
+            "Tests\\Phpunit\\": "tests-phpunit/"
+        }
     }
 }

@@ -5,10 +5,13 @@ class Charset {
   /** @var Iconv */
   protected static $iconv_library;
 
-  public static function convert($string, $to_charset = 'ASCII', $replacement = '?') {
+  public static function convert($string, $to_charset = 'ASCII', $replacement = '?', $from_charset = 'UTF-8') {
     if (static::$iconv_library === null) {
       /** @noinspection PhpUnhandledExceptionInspection */
       static::set_iconv_library();
+    }
+    if ($from_charset !== 'UTF-8') {
+      $string = iconv($from_charset, 'UTF-8', $string);
     }
     return call_user_func([static::$iconv_library, 'convert'], $string, $to_charset, $replacement);
   }
